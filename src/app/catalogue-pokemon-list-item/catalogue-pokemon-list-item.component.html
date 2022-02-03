@@ -1,5 +1,5 @@
 <li>
     {{pokemon?.pokemon?.name}}
     <img src="{{pokemon?.img}}">
-    <button>Add me to collection!</button>
+    <button *ngIf="!pokemon?.collected" (click)="onClick()">Add me to collection!</button>
 </li>

@@ -19,32 +19,20 @@ export class PokemonService{
         if(sessionStorage.getItem('pokemon') !== null){
             const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem('pokemon') || '');
             this.pokemonWithImg = pokeStorage;
-            console.log("Storage");
             return;
         }
-        console.log('Fetch');
         this.http.get<PokemonRawData>('https://pokeapi.co/api/v2/pokemon?limit=200')
         .subscribe((pokemonRaw: PokemonRawData) => {
             this.pokemon = pokemonRaw.results;
             for(let i = 0; i < this.pokemon.length; i++){
                 const pokeImgURL: string[] = this.pokemon[i].url.split('/');
-                this.pokemonWithImg.push({pokemon: this.pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-2]}.png`})
+                this.pokemonWithImg.push({pokemon: this.pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-2]}.png`, id: parseInt(pokeImgURL[pokeImgURL.length-2]), collected: false});
             }
             sessionStorage.setItem('pokemon', JSON.stringify(this.pokemonWithImg));
         }, (error: HttpErrorResponse) =>{
             this.error = error.message;
         })
-        //this.populatePokemonWithImages();
     }
-
-    /*public populatePokemonWithImages(): void{
-        console.log(this.pokemon);
-        for(let i = 0; i < this.pokemon.length; i++){
-            const pokeImgURL: string[] = this.pokemon[i].url.split('/');
-            this.pokemonWithImg.push({pokemon: this.pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-1]}.png`})
-        }
-        console.log(this.pokemonWithImg);
-    }*/
 
     public getPokemon(): PokemonWithImage[]{
         return this.pokemonWithImg;
@@ -52,5 +40,9 @@ export class PokemonService{
 
     public getError(): string{
         return this.error;
+    }
+
+    public collectPokemon(pokemon: PokemonWithImage): void{
+        pokemon.collected = true;
     }
 }

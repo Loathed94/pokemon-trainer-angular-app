@@ -15,10 +15,13 @@ export class CataloguePokemonListComponent implements OnInit{
 
     ngOnInit(): void {
         this.pokemonService.fetchPokemon();
-        //this.pokemonService.populatePokemonWithImages();
     }
 
     get pokemonList(): PokemonWithImage[]{
         return this.pokemonService.getPokemon();
+    }
+
+    public handleCollectClick(pokemon: PokemonWithImage): void{
+        this.pokemonService.collectPokemon(pokemon);
     }
 }

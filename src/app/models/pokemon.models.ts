@@ -5,6 +5,8 @@ export interface Pokemon{
 export interface PokemonWithImage{
     pokemon: Pokemon;
     img: string;
+    id: number;
+    collected: boolean;
 }
 
 export interface PokemonRawData{

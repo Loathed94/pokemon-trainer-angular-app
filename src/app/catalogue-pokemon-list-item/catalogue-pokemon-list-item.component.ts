@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { PokemonWithImage } from "../models/pokemon.models";
 
 @Component({
@@ -8,5 +8,9 @@ import { PokemonWithImage } from "../models/pokemon.models";
 })
 export class CataloguePokemonListItemComponent{
     @Input() pokemon: PokemonWithImage | undefined;
+    @Output() clicked: EventEmitter<PokemonWithImage> = new EventEmitter();
 
+    public onClick():void{
+        this.clicked.emit(this.pokemon);
+    }
 }

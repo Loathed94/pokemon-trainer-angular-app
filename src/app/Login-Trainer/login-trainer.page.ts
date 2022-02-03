@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 //Component (decorator) Created for login-trainer
 @Component ({ 
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
     styleUrls: ['./login-trainer.page.css']
 })
 
+//Adds user and checks if form is valid on submit
 export class LoginTrainerPage {
-
+    public onSubmit(loginForm: NgForm): void {
+        console.log(loginForm.valid);
+        
+    }
 }

@@ -3,15 +3,29 @@
 
     <!-- Submit function added for the form (button) with validation -->
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-        <label for=name>Trainer Name: </label>
+        <label class="form-label" for=trainername>Trainer Name: </label>
 
         <br>
-        <input type="text id=name" name="trainername" placeholder="Example Ash" ngModel #trainername="ngModel" required>
+        <input 
+            class="form-control"
+            type="text" 
+            id="name" 
+            [ngClass]="{'is-valid': trainername.valid, 'is-invalid': (trainername.invalid && ( trainername.dirty || trainername.touched ) ) }"
+            name="trainername" 
+            minlength="3" 
+            placeholder="Example Ash" 
+            ngModel #trainername="ngModel" 
+            required>
+            
+            <!-- Checking for validation -->
+            <div *ngIf="trainername.errors && trainername.invalid && ( trainername.dirty || trainername.touched) ">
+                <p class="invalid-feedback" *ngIf="trainername.errors?.['required']">Trainer name is required!</p>
+                <p class="invalid-feedback" *ngIf="trainername.errors?.['minlength']">Trainer name too short</p>
+
+            </div>
         <br>
         <br>
         <button type="submit" [disabled]="loginForm.invalid" class="btn btn-success">Lets Go Catch Some Pokémon!</button>
-
-        <p>{{loginForm.valid}}</p>
     </form>
 
 

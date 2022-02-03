@@ -1,5 +1,6 @@
 import { Component, NgModule } from "@angular/core";
 import { Router, RouterModule, Routes } from "@angular/router";
+import { CataloguePage } from "./catalogue/catalogue.page";
 import { LoginTrainerPage } from "./Login-Trainer/login-trainer.page";
 
 //1. Landing Page
@@ -20,6 +21,10 @@ const routes: Routes = [
         path: 'login',
         component: LoginTrainerPage,
 
+    },
+    {
+        path: 'catalogue',
+        component: CataloguePage,
     }
 ]
 

@@ -19,10 +19,13 @@ export class PokemonService{
         //const pokeStorage: string | null = sessionStorage.getItem('pokemon');
         //console.log(pokeStorage)
         if(sessionStorage.getItem('pokemon') !== null){
-            const pokeStorage: any = sessionStorage.getItem('pokemon');
-            this.pokemonWithImg = pokeStorage.pokemon;
-            console.log("Storage: ", this.pokemonWithImg);
+            const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem('pokemon') || '');
+            this.pokemonWithImg = pokeStorage;
+            console.log("Storage");
+            return;
+            //console.log("Storage: ", this.pokemonWithImg);
         }
+        console.log('Fetch');
         this.http.get<PokemonRawData>('https://pokeapi.co/api/v2/pokemon?limit=200')
         .subscribe((pokemonRaw: PokemonRawData) => {
             //console.log(typeof pokemon);
@@ -31,7 +34,7 @@ export class PokemonService{
                 const pokeImgURL: string[] = this.pokemon[i].url.split('/');
                 this.pokemonWithImg.push({pokemon: this.pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-2]}.png`})
             }
-            sessionStorage.setItem('pokemon', JSON.stringify({results: this.pokemonWithImg}))
+            sessionStorage.setItem('pokemon', JSON.stringify(this.pokemonWithImg));
         }, (error: HttpErrorResponse) =>{
             this.error = error.message;
         })

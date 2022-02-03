@@ -16,19 +16,15 @@ export class PokemonService{
     }
 
     public fetchPokemon(): void{
-        //const pokeStorage: string | null = sessionStorage.getItem('pokemon');
-        //console.log(pokeStorage)
         if(sessionStorage.getItem('pokemon') !== null){
             const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem('pokemon') || '');
             this.pokemonWithImg = pokeStorage;
             console.log("Storage");
             return;
-            //console.log("Storage: ", this.pokemonWithImg);
         }
         console.log('Fetch');
         this.http.get<PokemonRawData>('https://pokeapi.co/api/v2/pokemon?limit=200')
         .subscribe((pokemonRaw: PokemonRawData) => {
-            //console.log(typeof pokemon);
             this.pokemon = pokemonRaw.results;
             for(let i = 0; i < this.pokemon.length; i++){
                 const pokeImgURL: string[] = this.pokemon[i].url.split('/');

@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { CataloguePokemonListItemComponent } from './catalogue-pokemon-list-item/catalogue-pokemon-list-item.component';
 import { CataloguePokemonListComponent } from './catalogue-pokemon-list/catalogue-pokemon-list.component';
 import { CataloguePage } from './catalogue/catalogue.page';
-import { LoginTrainerPage } from './Login-Trainer/login-trainer.page';
+import { LoginTrainerPage } from './login-trainer/login-trainer.page';
 import { AppComponent } from './app.component';
 
 

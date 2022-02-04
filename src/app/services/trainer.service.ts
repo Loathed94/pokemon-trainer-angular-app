@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-const TRAINER_KEY ="trainerame"
+const TRAINER_KEY ="trainername"
 
 @Injectable({
     providedIn: 'root'
@@ -14,12 +14,13 @@ export class TrainersService {
     }
 
     set trainername(trainername: string) {
-        sessionStorage.setItem(TRAINER_KEY, trainername)
+        localStorage.setItem(TRAINER_KEY, trainername)
         this._trainers = trainername;
     }
 
+    //Session Storage dosent remove the user after refresh
     constructor(private readonly http: HttpClient) {
-
+        this._trainers= localStorage.getItem(TRAINER_KEY) || "";
     }
 
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Pokemon, PokemonRawData, PokemonWithImage } from "../models/pokemon.models";
 
@@ -63,4 +63,16 @@ export class PokemonService{
         namedPokemon.collected = true;
         this.updateStorageAndTrainer();
     }
+
+    /*private createHeaders(){
+        return new HttpHeaders({
+            'Content-Type': 'application/json',
+            'x-api-key': 'API-KEY'
+        })
+    }
+
+    patchFunction(payload: string): void{
+        const headers = this.createHeaders()
+        this.http.patch('api url', payload, {headers})
+    }*/
 }

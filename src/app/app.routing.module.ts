@@ -23,7 +23,6 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginTrainerPage,
-
     },
     {
         path: 'catalogue',

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CataloguePage } from '../catalogue/catalogue.page';
 import { TrainersService } from '../services/trainer.service';
 
 @Injectable({
@@ -25,6 +26,7 @@ export class TrainerAuthGuard implements CanActivate {
       this.router.navigateByUrl("/") //Login
       return false;
     }
+    
   }
   
 }

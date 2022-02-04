@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-const TRAINER_KEY ="trainername"
+const TRAINER_KEY ="trainerame"
 
 @Injectable({
     providedIn: 'root'

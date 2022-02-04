@@ -29,9 +29,9 @@ export class LoginTrainerPage implements OnInit {
     //Checks the trainer and adds to API
     onSubmit(loginForm: NgForm): void {
         const { trainername } = loginForm.value;
-        this.trainerService.trainername = trainername
-        this.router.navigateByUrl("/catalogue")
-        this.trainerService.addTrainer(trainername)
+        //this.trainerService.trainername = trainername
+        this.trainerService.addTrainer(trainername);
+        //this.router.navigateByUrl("/catalogue");
         /*.subscribe({
             next: (response: any) => {
                 console.log("Logged In", response);

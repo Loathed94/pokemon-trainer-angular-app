@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Trainer } from "../models/trainer.models";
+import { Router } from "@angular/router";
 
 
-const TRAINER_KEY ="trainername"
+const TRAINER_KEY = environment.trainerItem;
+const API_KEY = environment.apiKey;
 const URL = environment.pokemonAPI;
 
 @Injectable({
@@ -16,24 +17,19 @@ export class TrainersService {
     private _trainer: Trainer | null = null;
     private error: string = '';
 
-    get trainername(): string {
-        return this._trainers
-    }
-
-    set trainername(trainername: string) {
-        localStorage.setItem(TRAINER_KEY, trainername)
-        this._trainers = trainername;
+    get trainerName(): string {
+        return this._trainer?.username || '';
     }
 
     //Session Storage dosent remove the user after refresh
-    constructor(private readonly http: HttpClient) { 
+    constructor(private readonly http: HttpClient, private router: Router) { 
         
     }
 
     private createHeaders(): HttpHeaders {
         return new HttpHeaders({
             'Content-Type': 'application/json',
-            'x-api-key': "n1ZKh0vT2oxeCvrWBefmxhBLDpFw0bouiHRtG1OjzIgol1Lm2TWdWSIcD4kj8Zic"
+            'x-api-key': API_KEY
         })
     }
 
@@ -48,20 +44,18 @@ export class TrainersService {
                 }
                 const headers = this.createHeaders()
                 this.http.post<Trainer>(`${URL}?username=${username}`, user, {headers})
-                .subscribe({
-                    next: (response: Trainer) => {
+                .subscribe((response: Trainer) => {
                         this._trainer = response;
                         localStorage.setItem(TRAINER_KEY, JSON.stringify(response));
                         console.log("Logged In", response);
                     },
-                });
+                );
             }
             else{
                 this._trainer = trainer.pop() || null;
                 localStorage.setItem(TRAINER_KEY, JSON.stringify(this._trainer));
             }
-        }, (error: HttpErrorResponse) =>{
-            this.error = error.message;
+            this.router.navigateByUrl("/catalogue");
         })
         /*const user = {
             username: username,
@@ -79,8 +73,9 @@ export class TrainersService {
 
 
 
-    public patchTrainerPokemon(pokemon: string[]){
-        this.http.patch('url', {pokemon: pokemon})
+    public patchTrainerPokemon(pokemon: string[], id: number): void{
+        const headers = this.createHeaders();
+        this.http.patch(`${URL}/${id}`, {pokemon: pokemon}, {headers})
     }
 
 }

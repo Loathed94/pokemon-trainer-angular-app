@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { CataloguePage } from '../catalogue/catalogue.page';
 import { TrainersService } from '../services/trainer.service';
 
@@ -8,6 +9,7 @@ import { TrainersService } from '../services/trainer.service';
   providedIn: 'root'
 })
 export class TrainerAuthGuard implements CanActivate {
+  private TRAINER_KEY = environment.trainerItem;
   constructor (
     private TrainerService : TrainersService,
     private router: Router
@@ -18,7 +20,7 @@ export class TrainerAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.TrainerService.trainername !== "") {
+    if (localStorage.getItem(this.TRAINER_KEY) !== null) {
       return true;
     }
     else {

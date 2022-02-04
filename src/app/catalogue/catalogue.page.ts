@@ -8,8 +8,8 @@ import { TrainersService } from "../services/trainer.service";
 })
 export class CataloguePage{
 
-    get trainername(): string {
-        return this.trainerService.trainername
+    get trainerName(): string {
+        return this.trainerService.trainerName;
     }
 
     constructor(

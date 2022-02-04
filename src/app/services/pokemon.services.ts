@@ -31,7 +31,7 @@ export class PokemonService{
             for(let i = 0; i < this.pokemon.length; i++){
                 const pokeImgURL: string[] = this.pokemon[i].url.split('/');
                 const newPokemon: PokemonWithImage = {pokemon: this.pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-2]}.png`, id: parseInt(pokeImgURL[pokeImgURL.length-2]), collected: false};
-                this.pokemonWithImg.push();
+                this.pokemonWithImg.push(newPokemon);
                 this.pokeNameMap.set(newPokemon.pokemon.name, newPokemon);
             }
             sessionStorage.setItem('pokemon', JSON.stringify(this.pokemonWithImg));

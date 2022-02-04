@@ -32,10 +32,10 @@ export class LoginTrainerPage implements OnInit {
         this.trainerService.trainername = trainername
         this.router.navigateByUrl("/catalogue")
         this.trainerService.addTrainer(trainername)
-        .subscribe({
+        /*.subscribe({
             next: (response: any) => {
                 console.log("Logged In", response);
             },
-        });
+        });*/
     }
 }

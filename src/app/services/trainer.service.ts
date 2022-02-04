@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Trainer } from "../models/trainer.models";
 
 
 const TRAINER_KEY ="trainername"
@@ -12,6 +13,8 @@ const URL = environment.pokemonAPI;
 })
 export class TrainersService {
     private _trainers: string = "";
+    private _trainer: Trainer | null = null;
+    private error: string = '';
 
     get trainername(): string {
         return this._trainers
@@ -23,8 +26,7 @@ export class TrainersService {
     }
 
     //Session Storage dosent remove the user after refresh
-    constructor(private readonly http: HttpClient) {
-        this._trainers= localStorage.getItem(TRAINER_KEY) || "";
+    constructor(private readonly http: HttpClient) { 
         
     }
 
@@ -36,8 +38,32 @@ export class TrainersService {
     }
 
     ///Add/Create new user to API
-    addTrainer(username: string): Observable<any> {
-        const user = {
+    addTrainer(username: string): void {
+        this.http.get<Trainer[]>(`${URL}?username=${username}`)
+        .subscribe((trainer: Trainer[]) => {
+            if(trainer.length === 0){
+                const user = {
+                    username: username,
+                    pokemon: []
+                }
+                const headers = this.createHeaders()
+                this.http.post<Trainer>(`${URL}?username=${username}`, user, {headers})
+                .subscribe({
+                    next: (response: Trainer) => {
+                        this._trainer = response;
+                        localStorage.setItem(TRAINER_KEY, JSON.stringify(response));
+                        console.log("Logged In", response);
+                    },
+                });
+            }
+            else{
+                this._trainer = trainer.pop() || null;
+                localStorage.setItem(TRAINER_KEY, JSON.stringify(this._trainer));
+            }
+        }, (error: HttpErrorResponse) =>{
+            this.error = error.message;
+        })
+        /*const user = {
             username: username,
             pokemon: []
         }
@@ -46,7 +72,7 @@ export class TrainersService {
         return this.http.post(URL + "", user, {
             headers
 
-        })
+        })*/
     }
 
     

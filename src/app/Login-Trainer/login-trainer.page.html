@@ -17,7 +17,7 @@
             ngModel #trainername="ngModel" 
             required>
             
-            <!-- Checking for validation -->
+            <!-- Checking for errors in trainername -->
             <div *ngIf="trainername.errors && trainername.invalid && ( trainername.dirty || trainername.touched) ">
                 <p class="invalid-feedback" *ngIf="trainername.errors?.['required']">Trainer name is required!</p>
                 <p class="invalid-feedback" *ngIf="trainername.errors?.['minlength']">Trainer name too short</p>
@@ -26,6 +26,10 @@
         <br>
         <br>
         <button type="submit" [disabled]="loginForm.invalid" class="btn btn-success">Lets Go Catch Some Pokémon!</button>
+
+        <pre>
+            {{loginForm.valid}}
+        </pre>
     </form>
 
 

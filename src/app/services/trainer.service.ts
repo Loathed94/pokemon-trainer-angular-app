@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 
+
 const TRAINER_KEY ="trainername"
 const URL = environment.pokemonAPI;
 
@@ -49,5 +50,11 @@ export class TrainersService {
     }
 
     
+
+
+
+    public patchTrainerPokemon(pokemon: string[]){
+        this.http.patch('url', {pokemon: pokemon})
+    }
 
 }

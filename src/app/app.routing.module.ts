@@ -1,6 +1,6 @@
 import { Component, NgModule } from "@angular/core";
 import { Router, RouterModule, Routes } from "@angular/router";
-import { LoginTrainerPage } from "./Login-Trainer/login-trainer.page";
+import { LoginTrainerPage } from "./login-trainer/login-trainer.page";
 
 //1. Landing Page
 //2. Catalogue Page

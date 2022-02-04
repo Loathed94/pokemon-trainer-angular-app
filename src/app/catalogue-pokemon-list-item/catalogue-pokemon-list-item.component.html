@@ -1,0 +1,5 @@
+<li>
+    {{pokemon?.pokemon?.name}}
+    <img src="{{pokemon?.img}}">
+    <button *ngIf="!pokemon?.collected" (click)="onClick()">Add me to collection!</button>
+</li>

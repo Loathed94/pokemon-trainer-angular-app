@@ -4,14 +4,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing.module';
 
-import { LoginTrainerPage } from './login-trainer/login-trainer.page';
-
+import { CataloguePokemonListItemComponent } from './catalogue-pokemon-list-item/catalogue-pokemon-list-item.component';
+import { CataloguePokemonListComponent } from './catalogue-pokemon-list/catalogue-pokemon-list.component';
+import { CataloguePage } from './catalogue/catalogue.page';
+import { LoginTrainerPage } from './Login-Trainer/login-trainer.page';
 import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginTrainerPage
+    LoginTrainerPage,
+    CataloguePage,
+    CataloguePokemonListComponent,
+    CataloguePokemonListItemComponent
   ],
   imports: [
     BrowserModule,

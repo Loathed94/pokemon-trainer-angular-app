@@ -1,12 +1,15 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app.routing.module';
+
 import { CataloguePokemonListItemComponent } from './catalogue-pokemon-list-item/catalogue-pokemon-list-item.component';
 import { CataloguePokemonListComponent } from './catalogue-pokemon-list/catalogue-pokemon-list.component';
 import { CataloguePage } from './catalogue/catalogue.page';
 import { LoginTrainerPage } from './Login-Trainer/login-trainer.page';
+import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [
@@ -18,8 +21,9 @@ import { LoginTrainerPage } from './Login-Trainer/login-trainer.page';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
-    HttpClientModule
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

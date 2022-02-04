@@ -3,6 +3,7 @@ import { Router, RouterModule, Routes } from "@angular/router";
 import { CataloguePage } from "./catalogue/catalogue.page";
 import { LoginTrainerPage } from "./Login-Trainer/login-trainer.page";
 
+
 //1. Landing Page
 //2. Catalogue Page
 //3. Trainer Page
@@ -15,7 +16,7 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/catalogue'
+        redirectTo: '/login'
     },
     {
         path: 'login',

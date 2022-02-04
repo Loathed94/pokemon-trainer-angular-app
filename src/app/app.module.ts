@@ -9,6 +9,7 @@ import { CataloguePokemonListComponent } from './catalogue-pokemon-list/catalogu
 import { CataloguePage } from './catalogue/catalogue.page';
 import { LoginTrainerPage } from './Login-Trainer/login-trainer.page';
 import { AppComponent } from './app.component';
+import { TrainerPage } from './trainer/trainer.page';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AppComponent } from './app.component';
     LoginTrainerPage,
     CataloguePage,
     CataloguePokemonListComponent,
-    CataloguePokemonListItemComponent
+    CataloguePokemonListItemComponent,
+    TrainerPage
   ],
   imports: [
     BrowserModule,

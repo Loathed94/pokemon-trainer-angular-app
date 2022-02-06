@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Trainer } from "../models/trainer.models";
 import { TrainersService } from "../services/trainer.service";
 
 @Component({
@@ -9,7 +10,14 @@ import { TrainersService } from "../services/trainer.service";
 export class CataloguePage{
 
     get trainerName(): string {
+        if(this.trainerService.trainerName.length < 1){
+            this.trainerService.updateTrainerFromStorage();
+        }
         return this.trainerService.trainerName;
+    }
+
+    get trainer(): Trainer | null{
+        return this.trainerService.trainer;
     }
 
     constructor(

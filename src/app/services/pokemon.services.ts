@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
 import { Pokemon, PokemonRawData, PokemonWithImage } from "../models/pokemon.models";
+import { Trainer } from "../models/trainer.models";
 
 @Injectable({
     providedIn: 'root'
@@ -11,17 +13,21 @@ export class PokemonService{
     private error: string = '';
     private imgURL: string = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
     private pokeNameMap: Map<string, PokemonWithImage> = new Map();
+    private POKEMON_KEY = environment.pokemonItem;
 
     constructor(private readonly http: HttpClient){
 
     }
 
-    public fetchPokemon(): void{
+    public fetchPokemon(trainer: Trainer | null): void{
         if(sessionStorage.getItem('pokemon') !== null){
-            const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem('pokemon') || '');
+            const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem(this.POKEMON_KEY) || '');
             this.pokemonWithImg = pokeStorage;
             for(let i = 0; i < this.pokemonWithImg.length; i++){
                 this.pokeNameMap.set(this.pokemonWithImg[i].pokemon.name, this.pokemonWithImg[i]);
+            }
+            for(let i = 0; i < trainer!.pokemon.length; i++){
+                this.collectPokemonWithName(trainer!.pokemon[i]);
             }
             return;
         }
@@ -35,6 +41,9 @@ export class PokemonService{
                 this.pokeNameMap.set(newPokemon.pokemon.name, newPokemon);
             }
             sessionStorage.setItem('pokemon', JSON.stringify(this.pokemonWithImg));
+            for(let i = 0; i < trainer!.pokemon.length; i++){
+                this.collectPokemonWithName(trainer!.pokemon[i]);
+            }
         }, (error: HttpErrorResponse) =>{
             this.error = error.message;
         })
@@ -48,8 +57,18 @@ export class PokemonService{
         return this.error;
     }
 
-    public collectPokemon(pokemon: PokemonWithImage): void{
+    public resetPokemonList(): void{
+        const pokemonList: PokemonWithImage[] = JSON.parse(sessionStorage.getItem(this.POKEMON_KEY) || '');
+        for(let i = 0; i < pokemonList.length; i++){
+            pokemonList[i].collected = false;
+        }
+        this.pokemonWithImg = pokemonList;
+        sessionStorage.setItem(this.POKEMON_KEY, JSON.stringify(this.pokemonWithImg));
+    }
+
+    public collectPokemon(pokemon: PokemonWithImage, trainer: Trainer | null): void{
         pokemon.collected = true;
+        trainer!.pokemon.push(pokemon.pokemon.name);
         this.updateStorageAndTrainer();
     }
 

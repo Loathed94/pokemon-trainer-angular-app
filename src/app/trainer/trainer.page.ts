@@ -29,7 +29,20 @@ export class TrainerPage
     }
 
     public handleDeleteClick(pokemon: PokemonWithImage): void {
-        //Delete from trainer list
+        pokemon.collected = false;
+        const pokeArray: string[] = [...this.trainerService.trainer!.pokemon];
+        const index: number = pokeArray.indexOf(pokemon.pokemon.name);
+        const newPokeArray: string[] = [];
+        pokeArray.splice(index, 1);
+        /*for (let i = 0; i < pokeArray.length; i++) {
+            const pokemonString: string = pokeArray.pop() || '';
+            if (pokemonString !== pokemon.pokemon.name){
+                newPokeArray.push(pokemonString);
+            }
+        }*/
+        this.trainerService.newTrainerPokemon(pokeArray);
+        this.trainerService.patchTrainerPokemon();
+        this.pokemonService.updatePokemonStorage();
     }
 
     get pokemonList(): PokemonWithImage[] {
@@ -41,5 +54,7 @@ export class TrainerPage
         for (const name of names) {
             this.pokemon.push(this.pokemonService.pokemonFromMap(name));
         }
+        console.log(this.trainerService.trainer);
+        console.log(this.pokemonService.getPokemon());
     }
 }

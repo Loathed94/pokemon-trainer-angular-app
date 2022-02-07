@@ -43,6 +43,10 @@ export class TrainersService{
         return this._trainer;
     }
 
+    public newTrainerPokemon(pokemon: string[]){
+        this._trainer!.pokemon = pokemon;
+    }
+
     //A setter for the service's trainer object.
     public setTrainer(trainer: Trainer): void{
         this._trainer = trainer;

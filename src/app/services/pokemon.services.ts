@@ -81,13 +81,12 @@ export class PokemonService{
     public collectPokemon(pokemon: PokemonWithImage, trainer: Trainer | null): void{
         pokemon.collected = true;
         trainer!.pokemon.push(pokemon.pokemon.name);
-        this.updateStorageAndTrainer();
+        this.updatePokemonStorage();
     }
 
     //Method updates the list of pokemon stored in sessionStorage, called upon when a pokemon's properties are changed. 
-    private updateStorageAndTrainer(): void{
-        sessionStorage.setItem('pokemon', JSON.stringify(this.pokemonWithImg));
-        //Update trainer locally and on API
+    public updatePokemonStorage(): void{
+        sessionStorage.setItem(this.POKEMON_KEY, JSON.stringify(this.pokemonWithImg));
     }
 
     //Uses a pokemon's name as string to mark it as collected using a hashmap that stores the same pokemon objects as the array.
@@ -95,6 +94,6 @@ export class PokemonService{
     public collectPokemonWithName(name: string): void {
         const namedPokemon: PokemonWithImage = this.pokeNameMap.get(name) || {pokemon: {name: '', url: ''}, img: '', id: NaN, collected: false};
         namedPokemon.collected = true;
-        this.updateStorageAndTrainer();
+        this.updatePokemonStorage();
     }
 }

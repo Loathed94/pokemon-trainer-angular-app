@@ -3,24 +3,24 @@
 
     <!-- Submit function added for the form (button) with validation -->
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-        <label class="form-label" for=trainername>Trainer Name: </label>
+        <label class="form-label" for=trainerName>Trainer Name: </label>
 
         <br>
         <input 
             class="form-control"
             type="text" 
             id="name" 
-            [ngClass]="{'is-valid': trainername.valid, 'is-invalid': (trainername.invalid && ( trainername.dirty || trainername.touched ) ) }"
-            name="trainername" 
+            [ngClass]="{'is-valid': trainerName.valid, 'is-invalid': (trainerName.invalid && ( trainerName.dirty || trainerName.touched ) ) }"
+            name="trainerName" 
             minlength="3" 
             placeholder="Example Ash" 
-            ngModel #trainername="ngModel" 
+            ngModel #trainerName="ngModel" 
             required>
             
             <!-- Checking for errors in trainername -->
-            <div *ngIf="trainername.errors && trainername.invalid && ( trainername.dirty || trainername.touched) ">
-                <p class="invalid-feedback" *ngIf="trainername.errors?.['required']">Trainer name is required!</p>
-                <p class="invalid-feedback" *ngIf="trainername.errors?.['minlength']">Trainer name too short</p>
+            <div *ngIf="trainerName.errors && trainerName.invalid && ( trainerName.dirty || trainerName.touched) ">
+                <p class="invalid-feedback" *ngIf="trainerName.errors?.['required']">Trainer name is required!</p>
+                <p class="invalid-feedback" *ngIf="trainerName.errors?.['minlength']">Trainer name too short</p>
 
             </div>
         <br>

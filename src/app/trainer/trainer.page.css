@@ -1,3 +1,8 @@
-* {
-    text-align: center;
+.text-trainer {
+    color: white;
+    margin: auto;
+}
+
+.btn {
+    margin: auto;
 }

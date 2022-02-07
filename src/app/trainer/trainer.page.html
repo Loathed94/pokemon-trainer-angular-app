@@ -1,7 +1,7 @@
-<h1>Trainer: {{trainerName}}</h1>
-<div class="profile-page">
-    <h3>Collected Pokémon:</h3>
-    <button class="btn btn-danger">Remove Collected Pokémon</button>
-    <br>
-    <button routerLink="/login" class="btn btn-warning" (click)="logOut()">Logout</button>
-</div>
+<nav class="navbar navbar-dark bg-dark">
+    <img src="https://cdn-icons-png.flaticon.com/512/1408/1408921.png" class="image" width="70" height="70">
+    <button class="btn btn-success" routerLink="/catalogue">Go To Catalogue Page</button>
+    <h1 class="text-trainer"> {{trainerName}}'s Collected Pokémon</h1>
+    <button class="btn btn-warning" routerLink="/login" (click)="logOut()">Logout</button>
+    <img src="https://cdn-icons-png.flaticon.com/512/1408/1408921.png" class="image" width="70" height="70">
+</nav>

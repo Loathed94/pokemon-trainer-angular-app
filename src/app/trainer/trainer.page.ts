@@ -50,6 +50,14 @@ export class TrainerPage
     }
 
     ngOnInit(): void {
+        if(this.trainerService.trainer === null){
+            this.trainerService.updateTrainerFromStorage();
+        }
+        if(this.pokemonService.getPokemon.length === 0){
+            this.pokemonService.fetchPokemon(this.trainerService.trainer);
+        }
+        console.log(this.trainerService.trainer);
+        console.log(this.trainerService.trainerPokemon);
         const names: string [] =  this.trainerService.trainerPokemon;
         for (const name of names) {
             this.pokemon.push(this.pokemonService.pokemonFromMap(name));

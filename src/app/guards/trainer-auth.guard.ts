@@ -11,7 +11,6 @@ import { TrainersService } from '../services/trainer.service';
 export class TrainerAuthGuard implements CanActivate {
   private TRAINER_KEY = environment.trainerItem;
   constructor (
-    private TrainerService : TrainersService,
     private router: Router
    ) {
 

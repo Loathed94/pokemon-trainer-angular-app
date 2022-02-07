@@ -1,5 +1,5 @@
-import { Injectable, OnInit } from "@angular/core";
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Trainer } from "../models/trainer.models";
 import { Router } from "@angular/router";

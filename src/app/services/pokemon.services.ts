@@ -23,7 +23,7 @@ export class PokemonService{
     //Otherwise it performs a fetch from API and stores the results in this state and in sessionStorage. 
     //Both versions of the method will also iterate over trainer's pokemon and mark those as collected in the list of pokemon stored here.
     public fetchPokemon(trainer: Trainer | null): void{
-        if(sessionStorage.getItem('pokemon') !== null){
+        if(sessionStorage.getItem(this.POKEMON_KEY) !== null){
             const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem(this.POKEMON_KEY) || '');
             this.pokemonWithImg = pokeStorage;
             for(let i = 0; i < this.pokemonWithImg.length; i++){

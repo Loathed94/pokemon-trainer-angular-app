@@ -1,3 +1,9 @@
 .trainer {
     text-align: center;
 }
+
+.form-control{
+    align-items: center;
+    width: 30%;
+    margin: auto;
+}

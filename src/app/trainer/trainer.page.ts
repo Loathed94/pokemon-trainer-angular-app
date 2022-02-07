@@ -16,4 +16,8 @@ export class TrainerPage {
     constructor(
         private trainerService: TrainersService
     ) { }
+
+    logOut(){
+        localStorage.clear()
+    }
 }

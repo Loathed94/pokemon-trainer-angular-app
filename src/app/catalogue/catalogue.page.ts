@@ -9,6 +9,8 @@ import { TrainersService } from "../services/trainer.service";
 })
 export class CataloguePage{
 
+    //A getter used by html to present trainer name on the page. 
+    //If the trainerService hasn't loaded the trainer from localStorage (if for example a user refreshes catalogue-page) then this method calls an update-method within the service.
     get trainerName(): string {
         if(this.trainerService.trainerName.length < 1){
             this.trainerService.updateTrainerFromStorage();
@@ -16,6 +18,7 @@ export class CataloguePage{
         return this.trainerService.trainerName;
     }
 
+    //A getter for the Trainer-object from trainerService.
     get trainer(): Trainer | null{
         return this.trainerService.trainer;
     }

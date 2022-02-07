@@ -57,6 +57,10 @@ export class PokemonService{
         return this.pokemonWithImg;
     }
 
+   public pokemonFromMap(pokemonName:string ): PokemonWithImage {
+        return this.pokeNameMap!.get(pokemonName) || {pokemon: {name: "", url: ""}, img: "", id: NaN, collected: false };
+    }
+
     //A getter that returns error (not really used, delete?).
     public getError(): string{
         return this.error;

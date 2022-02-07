@@ -34,6 +34,10 @@ export class TrainersService{
         return this._trainer?.username || '';
     }
 
+    get trainerPokemon(): string [] {
+        return this._trainer!.pokemon;
+    }
+
     //A getter for the trainer-object.
     get trainer(): Trainer | null{
         return this._trainer;

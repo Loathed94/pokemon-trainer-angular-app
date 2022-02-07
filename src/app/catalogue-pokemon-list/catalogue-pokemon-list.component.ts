@@ -10,13 +10,13 @@ import { TrainersService } from "../services/trainer.service";
     styleUrls: ['./catalogue-pokemon-list.component.css']
 })
 export class CataloguePokemonListComponent implements OnInit{
-    //@Input() trainer: Trainer | null = null;
 
     constructor(private readonly pokemonService: PokemonService,
         private readonly trainerService: TrainersService){
 
     }
 
+    //On initialization this component fetches the pokemon from pokemonService and makes sure that there's a trainer in the trainerService.
     ngOnInit(): void {
         if(this.trainerService.trainer === null){
             this.trainerService.updateTrainerFromStorage();
@@ -24,13 +24,14 @@ export class CataloguePokemonListComponent implements OnInit{
         this.pokemonService.fetchPokemon(this.trainerService.trainer);
     }
 
+    //A getter that returns the list of pokemon contained within the pokemonService.
     get pokemonList(): PokemonWithImage[]{
         return this.pokemonService.getPokemon();
     }
 
+    //When a collect-button is clicked in the child-component of this one the pokemon is sent as a parameter and is marked as collected in the pokemonService and added to trainer in the trainerService.
     public handleCollectClick(pokemon: PokemonWithImage): void{
         this.pokemonService.collectPokemon(pokemon, this.trainerService.trainer);
         this.trainerService.patchTrainerPokemon();
-        //this.trainerService.updateTrainerInStorage();
     }
 }

@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CataloguePage } from '../catalogue/catalogue.page';
-import { TrainersService } from '../services/trainer.service';
-
 @Injectable({
   providedIn: 'root'
 })

@@ -16,3 +16,9 @@
     font-size: larger;
     font-weight: bolder;
 }
+
+.image-pokemon{
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}

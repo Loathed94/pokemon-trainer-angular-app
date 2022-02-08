@@ -5,13 +5,6 @@ import { TrainerAuthGuard } from "./guards/trainer-auth.guard";
 import { LoginTrainerPage } from "./login-trainer/login-trainer.page";
 import { TrainerPage } from "./trainer/trainer.page";
 
-
-
-//1. Landing Page
-//2. Catalogue Page
-//3. Trainer Page
-
-
 //Route Created to Navigate
 const routes: Routes = [
 

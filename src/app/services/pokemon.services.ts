@@ -8,7 +8,7 @@ import { Trainer } from "../models/trainer.models";
     providedIn: 'root'
 })
 export class PokemonService{
-    //private pokemon: Pokemon[] = [];
+    private pokemon: Pokemon[] = [];
     private pokemonWithImg: PokemonWithImage[] = [];
     private error: string = '';
     private imgURL: string = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
@@ -19,38 +19,27 @@ export class PokemonService{
 
     }
 
-
-    public populatePokemon(trainer: Trainer | null): void{
-        if(sessionStorage.getItem(this.POKEMON_KEY) !== null){
-            this.setPokemonFromStorage(trainer);
-        }
-        else{
-            this.fetchPokemon(trainer);
-        }
-    }
-
     //The method first checks if there is a list of pokemon in sessionStorage, if so it fetches that information to the state and returns.
     //Otherwise it performs a fetch from API and stores the results in this state and in sessionStorage. 
     //Both versions of the method will also iterate over trainer's pokemon and mark those as collected in the list of pokemon stored here.
-    private setPokemonFromStorage(trainer: Trainer | null): void{
-        const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem(this.POKEMON_KEY) || '');
-        this.pokemonWithImg = pokeStorage;
-        for(let i = 0; i < this.pokemonWithImg.length; i++){
-            this.pokeNameMap.set(this.pokemonWithImg[i].pokemon.name, this.pokemonWithImg[i]);
+    public fetchPokemon(trainer: Trainer | null): void{
+        if(sessionStorage.getItem(this.POKEMON_KEY) !== null){
+            const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem(this.POKEMON_KEY) || '');
+            this.pokemonWithImg = pokeStorage;
+            for(let i = 0; i < this.pokemonWithImg.length; i++){
+                this.pokeNameMap.set(this.pokemonWithImg[i].pokemon.name, this.pokemonWithImg[i]);
+            }
+            for(let i = 0; i < trainer!.pokemon.length; i++){
+                this.collectPokemonWithName(trainer!.pokemon[i]);
+            }
+            return;
         }
-        for(let i = 0; i < trainer!.pokemon.length; i++){
-            this.collectPokemonWithName(trainer!.pokemon[i]);
-        }
-        return;
-    }
-
-    private fetchPokemon(trainer: Trainer | null): void{
         this.http.get<PokemonRawData>('https://pokeapi.co/api/v2/pokemon?limit=200')
         .subscribe((pokemonRaw: PokemonRawData) => {
-            const pokemon: Pokemon[] = pokemonRaw.results;
-            for(let i = 0; i < pokemon.length; i++){
-                const pokeImgURL: string[] = pokemon[i].url.split('/');
-                const newPokemon: PokemonWithImage = {pokemon: pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-2]}.png`, id: parseInt(pokeImgURL[pokeImgURL.length-2]), collected: false};
+            this.pokemon = pokemonRaw.results;
+            for(let i = 0; i < this.pokemon.length; i++){
+                const pokeImgURL: string[] = this.pokemon[i].url.split('/');
+                const newPokemon: PokemonWithImage = {pokemon: this.pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-2]}.png`, id: parseInt(pokeImgURL[pokeImgURL.length-2]), collected: false};
                 this.pokemonWithImg.push(newPokemon);
                 this.pokeNameMap.set(newPokemon.pokemon.name, newPokemon);
             }
@@ -58,7 +47,9 @@ export class PokemonService{
             for(let i = 0; i < trainer!.pokemon.length; i++){
                 this.collectPokemonWithName(trainer!.pokemon[i]);
             }
-        });
+        }, (error: HttpErrorResponse) =>{
+            this.error = error.message;
+        })
     }
 
     //A getter that returns all pokemon stored in state.

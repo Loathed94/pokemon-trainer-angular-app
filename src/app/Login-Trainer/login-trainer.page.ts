@@ -14,9 +14,6 @@ const POKEMON_KEY = environment.pokemonItem;
     templateUrl: './login-trainer.page.html',
     styleUrls: ['./login-trainer.page.css']
 })
-
-
-
 export class LoginTrainerPage implements OnInit {
 
     constructor(

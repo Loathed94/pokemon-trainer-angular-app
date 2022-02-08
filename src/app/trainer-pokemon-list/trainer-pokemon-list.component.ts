@@ -7,7 +7,6 @@ import { PokemonWithImage } from "../models/pokemon.models";
     templateUrl: './trainer-pokemon-list.component.html',
     styleUrls: ['./trainer-pokemon-list.component.css']
 })
-
 export class TrainerPokemonListComponent{
     @Input() pokemon: PokemonWithImage | undefined;
     @Output() clicked: EventEmitter<PokemonWithImage> = new EventEmitter();

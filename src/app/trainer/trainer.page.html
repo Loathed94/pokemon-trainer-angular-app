@@ -5,6 +5,8 @@
     <button class="btn btn-warning"  (click)="logOut()">Logout</button>
     <img src="https://cdn-icons-png.flaticon.com/512/1408/1408921.png" class="image" width="70" height="70">
 </nav>
-<ul>
-    <app-trainer-pokemon-list *ngFor="let pokemon of pokemonList" (clicked)="handleDeleteClick($event)" [pokemon]="pokemon"></app-trainer-pokemon-list>
+
+<ul class="trainer-pokemon-list">
+    <app-trainer-pokemon-list *ngFor="let pokemon of pokemonList" (clicked)="handleDeleteClick($event)"
+        [pokemon]="pokemon"></app-trainer-pokemon-list>
 </ul>

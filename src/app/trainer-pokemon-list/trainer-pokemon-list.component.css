@@ -1,0 +1,11 @@
+.collected-pokemon {
+    display: grid;
+    list-style-type: none;
+    border-color:crimson;
+    border-style:double;
+    justify-items: center;
+    text-transform: capitalize;
+    color: red;
+    font-size: larger;
+    font-weight: bolder;
+}

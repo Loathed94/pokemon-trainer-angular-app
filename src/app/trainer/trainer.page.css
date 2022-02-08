@@ -6,3 +6,9 @@
 .btn {
     margin: auto;
 }
+.trainer-pokemon-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+}

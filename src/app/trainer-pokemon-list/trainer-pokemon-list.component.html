@@ -1,5 +1,5 @@
-<li *ngIf="pokemon?.collected">
+<li class="collected-pokemon" *ngIf="pokemon?.collected">
     {{pokemon?.pokemon?.name}}
-    <img src="{{image}}">
-    <button class="btn btn-outline-success" (click)="onClick()">Remove me from collection!</button>
+    <img src="{{image}}" width="100" height="100">
+    <button class="btn btn-danger" (click)="onClick()">Remove me from collection!</button>
 </li>

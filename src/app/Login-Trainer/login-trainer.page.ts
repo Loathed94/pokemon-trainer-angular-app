@@ -6,7 +6,6 @@ import { Trainer } from '../models/trainer.models';
 import { PokemonService } from '../services/pokemon.services';
 import { TrainersService } from '../services/trainer.service';
 
-//Component (decorator) Created for login-trainer
 
 const TRAINER_KEY = environment.trainerItem;
 const POKEMON_KEY = environment.pokemonItem;
@@ -18,7 +17,6 @@ const POKEMON_KEY = environment.pokemonItem;
 
 
 
-//Adds user and checks if form is valid on submit
 export class LoginTrainerPage implements OnInit {
 
     constructor(
@@ -29,9 +27,9 @@ export class LoginTrainerPage implements OnInit {
 
     //When login-page is initialized an if-check is performed to act as a sort of reversed auth-guard, if a trainer is available in localStorage then the state is set as that trainer and router sends the user to catalogue-page.
     //Additionally the the API is consulted to make sure the trainer still exists there, if not the trainer is created on API with its properties and a new ID is returned and saved locally and in state.
+    //If login-page was navigated to with a parameter with the name of a different page login-page will act as a trainer verification where steps described above will be performed and navigation back to previous page will be performed.
     //If there is no trainer logged in already but pokemon exist in sessionStorage then the list of pokemon is reset so that all pokemon start off being uncollected before a new trainer is logged in.
     ngOnInit(): void {
-        console.log("OnInit Login");
         if(localStorage.getItem(TRAINER_KEY)){
             const reroute: string = this.actRoute.snapshot.params["reroute"];
             const storedTrainer: Trainer = JSON.parse(localStorage.getItem(TRAINER_KEY) || '');
@@ -42,7 +40,6 @@ export class LoginTrainerPage implements OnInit {
             else{
                 routing += reroute;
             }
-            console.log("Rerouting from Login to ",routing);
             this.trainerService.loginTrainer(storedTrainer, routing);
         }
         else if(sessionStorage.getItem(POKEMON_KEY) !== null){

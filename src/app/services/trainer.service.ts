@@ -16,28 +16,16 @@ const URL = environment.pokemonAPI;
 })
 export class TrainersService{
     private _trainer: Trainer | null = null;
-    //private error: string = '';
-
 
     constructor(private readonly http: HttpClient, private router: Router) { }
 
-    //If a page is refreshed while there is a trainer in storage the service will need to refresh its own variable of the trainer.
-    /*public updateTrainerFromStorage(): void{
-        if(localStorage.getItem(TRAINER_KEY) !== null){
-            this._trainer = JSON.parse(localStorage.getItem(TRAINER_KEY) || '');
-        }
-    }*/
-
-    //Updates or sets the trainer in localStorage, mainly called when a trainer is updated, for example getting a new pokemon.
-    /*public updateTrainerInStorage(): void{
-        localStorage.setItem(TRAINER_KEY, JSON.stringify(this._trainer));
-    }*/
 
     //A getter for the trainer's name. 
     get trainerName(): string {
         return this._trainer?.username || '';
     }
 
+    //A getter for the list of pokemon the trainer owns.
     get trainerPokemon(): string [] {
         return this._trainer!.pokemon;
     }

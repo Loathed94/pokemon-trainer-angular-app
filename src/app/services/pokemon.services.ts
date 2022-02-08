@@ -8,18 +8,18 @@ import { Trainer } from "../models/trainer.models";
     providedIn: 'root'
 })
 export class PokemonService{
-    //private pokemon: Pokemon[] = [];
     private pokemonWithImg: PokemonWithImage[] = [];
-    private error: string = '';
-    private imgURL: string = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
-    private pokeNameMap: Map<string, PokemonWithImage> = new Map();
+    public pokeNameMap: Map<string, PokemonWithImage> = new Map();
     private POKEMON_KEY = environment.pokemonItem;
+    private AVATAR_KEY = environment.pokemonAvatar;
+    private POKEMON_URL = environment.pokemonURL;
 
     constructor(private readonly http: HttpClient){
 
     }
 
-
+    //This method populates the list of pokemon in this service/state by using one of two other methods depending on the situation.
+    //Both called methods will also iterate over trainer's pokemon and mark those as collected in the list of pokemon stored here.
     public populatePokemon(trainer: Trainer | null): void{
         if(sessionStorage.getItem(this.POKEMON_KEY) !== null){
             this.setPokemonFromStorage(trainer);
@@ -30,31 +30,33 @@ export class PokemonService{
     }
 
     //The method first checks if there is a list of pokemon in sessionStorage, if so it fetches that information to the state and returns.
-    //Otherwise it performs a fetch from API and stores the results in this state and in sessionStorage. 
-    //Both versions of the method will also iterate over trainer's pokemon and mark those as collected in the list of pokemon stored here.
     private setPokemonFromStorage(trainer: Trainer | null): void{
+        console.log("Storage");
         const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem(this.POKEMON_KEY) || '');
         this.pokemonWithImg = pokeStorage;
         for(let i = 0; i < this.pokemonWithImg.length; i++){
             this.pokeNameMap.set(this.pokemonWithImg[i].pokemon.name, this.pokemonWithImg[i]);
         }
+        console.log(this.pokeNameMap.entries());
         for(let i = 0; i < trainer!.pokemon.length; i++){
             this.collectPokemonWithName(trainer!.pokemon[i]);
         }
         return;
     }
 
+    //This method performs a fetch from API and stores the results in this state and in sessionStorage. 
     private fetchPokemon(trainer: Trainer | null): void{
-        this.http.get<PokemonRawData>('https://pokeapi.co/api/v2/pokemon?limit=200')
+        console.log("Fetch");
+        this.http.get<PokemonRawData>(this.POKEMON_URL)
         .subscribe((pokemonRaw: PokemonRawData) => {
             const pokemon: Pokemon[] = pokemonRaw.results;
             for(let i = 0; i < pokemon.length; i++){
                 const pokeImgURL: string[] = pokemon[i].url.split('/');
-                const newPokemon: PokemonWithImage = {pokemon: pokemon[i], img: `${this.imgURL}${pokeImgURL[pokeImgURL.length-2]}.png`, id: parseInt(pokeImgURL[pokeImgURL.length-2]), collected: false};
+                const newPokemon: PokemonWithImage = {pokemon: pokemon[i], img: `${this.AVATAR_KEY}${pokeImgURL[pokeImgURL.length-2]}.png`, id: parseInt(pokeImgURL[pokeImgURL.length-2]), collected: false};
                 this.pokemonWithImg.push(newPokemon);
                 this.pokeNameMap.set(newPokemon.pokemon.name, newPokemon);
             }
-            sessionStorage.setItem('pokemon', JSON.stringify(this.pokemonWithImg));
+            sessionStorage.setItem(this.POKEMON_KEY, JSON.stringify(this.pokemonWithImg));
             for(let i = 0; i < trainer!.pokemon.length; i++){
                 this.collectPokemonWithName(trainer!.pokemon[i]);
             }
@@ -66,13 +68,9 @@ export class PokemonService{
         return this.pokemonWithImg;
     }
 
-   public pokemonFromMap(pokemonName:string ): PokemonWithImage {
+    //A pokemon name is received and used to get a pokemon out of the hashmap which is then returned. 
+    public pokemonFromMap(pokemonName:string ): PokemonWithImage {
         return this.pokeNameMap!.get(pokemonName) || {pokemon: {name: "", url: ""}, img: "", id: NaN, collected: false };
-    }
-
-    //A getter that returns error (not really used, delete?).
-    public getError(): string{
-        return this.error;
     }
 
     //A method that resets all pokemon stored in sessionStorage making sure all have collected = false. 
@@ -102,6 +100,7 @@ export class PokemonService{
     //Allows for easier access to specific pokemon. Used when a trainer is fetched that already owns some pokemon.
     public collectPokemonWithName(name: string): void {
         const namedPokemon: PokemonWithImage = this.pokeNameMap.get(name) || {pokemon: {name: '', url: ''}, img: '', id: NaN, collected: false};
+        console.log(namedPokemon);
         namedPokemon.collected = true;
         this.updatePokemonStorage();
     }

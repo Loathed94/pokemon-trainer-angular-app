@@ -10,6 +10,11 @@ import { TrainersService } from "../services/trainer.service";
 })
 export class CataloguePage {
 
+    constructor(
+        private router: Router,
+        private trainerService: TrainersService
+    ) { }
+
     //A getter used by html to present trainer name on the page. 
     public get trainerName(): string {
         return this.trainerService.trainerName;
@@ -20,10 +25,6 @@ export class CataloguePage {
         return this.trainerService.trainer;
     }
 
-    constructor(
-        private router: Router,
-        private trainerService: TrainersService
-    ) { }
 
     //Logs out the user, clearing localStorage and redirecting user to Login-page.
     public logOut() {

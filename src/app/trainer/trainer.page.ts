@@ -52,18 +52,12 @@ export class TrainerPage implements OnInit{
         if(this.trainerService.trainer === null){
             this.router.navigateByUrl('/login/trainer');
         }
-        else if(this.pokemonService.getPokemon.length === 0){
+        else if(this.pokemonService.getPokemon().length === 0){
             this.pokemonService.fetchPokemon(this.trainerService.trainer);
-            const names: string [] =  this.trainerService.trainerPokemon;
-            for (const name of names) {
-                this.pokemon.push(this.pokemonService.pokemonFromMap(name));
-            }
         }
-        else{
-            const names: string [] =  this.trainerService.trainerPokemon;
-            for (const name of names) {
-                this.pokemon.push(this.pokemonService.pokemonFromMap(name));
-            }
+        const names: string [] =  this.trainerService.trainerPokemon;
+        for (const name of names) {
+            this.pokemon.push(this.pokemonService.pokemonFromMap(name));
         }
     }
 }

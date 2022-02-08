@@ -10,8 +10,11 @@ export class CataloguePokemonListItemComponent{
     @Input() pokemon: PokemonWithImage | undefined;
     @Output() clicked: EventEmitter<PokemonWithImage> = new EventEmitter();
 
+    disabled = false
+
     //Emits the pokemon up to the parent-component for some action on that level.
     public onClick():void{
         this.clicked.emit(this.pokemon);
+        this.disabled = true
     }
 }

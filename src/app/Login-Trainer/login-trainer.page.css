@@ -11,3 +11,8 @@
 #pokemon {
     color: white;
 }
+
+.form-label{
+    font-size: larger;
+    font-weight: bolder;
+}

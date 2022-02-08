@@ -20,6 +20,7 @@ export class TrainersService{
     constructor(private readonly http: HttpClient, private router: Router) { }
 
 
+
     //A getter for the trainer's name. 
     get trainerName(): string {
         return this._trainer?.username || '';
@@ -35,7 +36,6 @@ export class TrainersService{
         return this._trainer;
     }
 
-    //Receives a list of pokemon and replaces the existing list with the new one.
     public newTrainerPokemon(pokemon: string[]){
         this._trainer!.pokemon = pokemon;
     }
@@ -43,6 +43,10 @@ export class TrainersService{
     //A setter for the service's trainer object.
     public setTrainer(trainer: Trainer | null): void{
         this._trainer = trainer;
+    }
+
+    constructor(private readonly http: HttpClient, private router: Router) { 
+        
     }
 
     //Creates a header needed for POST/PATCH api-calls.
@@ -53,8 +57,6 @@ export class TrainersService{
         })
     }
 
-    //A method specifically used to login (or register) or verify the existence of a user on the API that is stored on localStorage (if API has deleted the user they will be re-added with their pokemon but with new id).
-    //Get-call is made first, if trainer is not retrieved from there a post-call is made creating the trainer on the API. After method is run the new trainer is set in state and in localStorage.
     public loginTrainer(trainer: Trainer, routing: string): void{
         this.getTrainer(trainer)
         .pipe(
@@ -70,6 +72,7 @@ export class TrainersService{
         .subscribe((trainer: Trainer) => {
             this.setTrainer(trainer);
             localStorage.setItem(TRAINER_KEY, JSON.stringify(trainer));
+            console.log("Navigating to ",routing);
             this.router.navigateByUrl(routing);
         }
         )
@@ -78,12 +81,29 @@ export class TrainersService{
     //Fetching trainer using the name user input in login page if the trainer exists. Otherwise a trainer is created and posted on the API.
     public getTrainer(trainer: Trainer): Observable<Trainer[]> {
         return this.http.get<Trainer[]>(`${URL}?username=${trainer.username}`);
+        /*.subscribe((trainer: Trainer[]) => {
+            if(trainer.length === 0){
+                const user = {
+                    username: username,
+                    pokemon: []
+                }
+            }
+            else{
+                this._trainer = trainer.pop() || null;
+                localStorage.setItem(TRAINER_KEY, JSON.stringify(this._trainer));
+                this.router.navigateByUrl("/catalogue");
+            }
+        })*/
     }
 
-    //Performs a post-request to API with the trainer-information relevant.
     public postTrainer(trainer: Trainer): Observable<Trainer>{
         const headers = this.createHeaders();
         return this.http.post<Trainer>(`${URL}`, {username: trainer.username, pokemon: trainer.pokemon}, {headers});
+                /*.subscribe((response: Trainer) => {
+                    this._trainer = response;
+                    localStorage.setItem(TRAINER_KEY, JSON.stringify(response));
+                    this.router.navigateByUrl("/catalogue");
+        });*/
     }
 
     //When a pokemon is collected this method is called, it adds a pokemon name to the list of pokemon names that the trainer possesses.

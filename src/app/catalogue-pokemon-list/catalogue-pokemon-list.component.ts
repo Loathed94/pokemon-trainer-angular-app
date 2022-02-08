@@ -23,8 +23,8 @@ export class CataloguePokemonListComponent implements OnInit{
         if(this.trainerService.trainer === null){
             this.router.navigateByUrl('/login/catalogue');
         }
-        else if(this.pokemonService.getPokemon().length === 0){
-            this.pokemonService.populatePokemon(this.trainerService.trainer);
+        else{
+            this.pokemonService.fetchPokemon(this.trainerService.trainer);
         }
         else{
             this.pokemonService.populatePokemon(this.trainerService.trainer);

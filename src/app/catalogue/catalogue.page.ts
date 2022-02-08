@@ -11,12 +11,12 @@ import { TrainersService } from "../services/trainer.service";
 export class CataloguePage {
 
     //A getter used by html to present trainer name on the page. 
-    get trainerName(): string {
+    public get trainerName(): string {
         return this.trainerService.trainerName;
     }
 
     //A getter for the Trainer-object from trainerService.
-    get trainer(): Trainer | null{
+    public get trainer(): Trainer | null{
         return this.trainerService.trainer;
     }
 
@@ -25,9 +25,10 @@ export class CataloguePage {
         private trainerService: TrainersService
     ) { }
 
-    logOut() {
+    //Logs out the user, clearing localStorage and redirecting user to Login-page.
+    public logOut() {
         localStorage.clear();
-        this.router.navigateByUrl('/login/trainer');
+        this.router.navigateByUrl('/login/');
     }
 }
 

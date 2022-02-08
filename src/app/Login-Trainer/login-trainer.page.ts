@@ -32,8 +32,8 @@ export class LoginTrainerPage implements OnInit {
     //If there is no trainer logged in already but pokemon exist in sessionStorage then the list of pokemon is reset so that all pokemon start off being uncollected before a new trainer is logged in.
     ngOnInit(): void {
         console.log("OnInit Login");
-        const reroute: string = this.actRoute.snapshot.params["reroute"];
         if(localStorage.getItem(TRAINER_KEY)){
+            const reroute: string = this.actRoute.snapshot.params["reroute"];
             const storedTrainer: Trainer = JSON.parse(localStorage.getItem(TRAINER_KEY) || '');
             let routing: string = '/';
             if(reroute.length === 0){

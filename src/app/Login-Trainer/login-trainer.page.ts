@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { switchMap, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Trainer } from '../models/trainer.models';
 import { PokemonService } from '../services/pokemon.services';
@@ -21,6 +22,7 @@ const POKEMON_KEY = environment.pokemonItem;
 //Adds user and checks if form is valid on submit
 export class LoginTrainerPage implements OnInit {
 
+    private TRAINER_KEY = environment.trainerItem;
 
     constructor(
         private router: Router,
@@ -33,8 +35,9 @@ export class LoginTrainerPage implements OnInit {
     ngOnInit(): void {
         if(localStorage.getItem(TRAINER_KEY)){
             const storedTrainer: Trainer = JSON.parse(localStorage.getItem(TRAINER_KEY) || '');
-            this.trainerService.setTrainer(storedTrainer);
-            this.router.navigateByUrl("/catalogue");
+            //this.trainerService.setTrainer(storedTrainer);
+            //this.router.navigateByUrl("/catalogue");
+            this.trainerService.loginTrainer(storedTrainer, '/catalogue');
         }
         else if(sessionStorage.getItem(POKEMON_KEY) !== null){
             this.pokemonService.resetPokemonList();
@@ -44,6 +47,7 @@ export class LoginTrainerPage implements OnInit {
     //Method receives information from the NgForm, specifically a username, and sends it along to the trainerService to log in or register the new trainer.
     onSubmit(loginForm: NgForm): void {
         const { trainerName } = loginForm.value;
-        this.trainerService.addTrainer(trainerName);
+        const emptyTrainer: Trainer = {username: trainerName, id: -1, pokemon: []};
+        this.trainerService.loginTrainer(emptyTrainer, '/catalogue');
     }
 }

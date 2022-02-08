@@ -26,6 +26,12 @@ export class CataloguePokemonListComponent implements OnInit{
         else{
             this.pokemonService.fetchPokemon(this.trainerService.trainer);
         }
+        else{
+            this.pokemonService.populatePokemon(this.trainerService.trainer);
+            for(const pokemon of this.trainerService.trainerPokemon){
+                this.pokemonService.collectPokemonWithName(pokemon);
+            }
+        }
     }
 
     //A getter that returns the list of pokemon contained within the pokemonService.

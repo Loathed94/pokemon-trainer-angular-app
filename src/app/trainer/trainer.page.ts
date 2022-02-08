@@ -13,16 +13,18 @@ import { TrainersService } from "../services/trainer.service";
 export class TrainerPage implements OnInit{
     private pokemon: PokemonWithImage [] = [];
 
-    //Returns the name of the trainer, used to html to display name.
-    public get trainerName(): string {
-        return this.trainerService.trainerName;
-
-    }
     constructor(
         private router: Router,
         private readonly trainerService: TrainersService,
         private readonly pokemonService: PokemonService
     ) { }
+
+    //Returns the name of the trainer, used to html to display name.
+    public get trainerName(): string {
+        return this.trainerService.trainerName;
+
+    }
+
 
     //Logs out the user, clearing localStorage and redirecting user to Login-page.
     public logOut(){
@@ -49,17 +51,23 @@ export class TrainerPage implements OnInit{
         return this.pokemon;
     }
 
-    //On initialization the page makes sure trainer is validated after which it also makes sure pokemon exist in state, after it loads the pokemon the trainer owns into the page.
+    //On initialization the page makes sure trainer is validated after which it also makes sure pokemon exist in state, after that it loads the pokemon that the trainer owns into the page.    
     ngOnInit(): void {
         if(this.trainerService.trainer === null){
             this.router.navigateByUrl('/login/trainer');
         }
         else if(this.pokemonService.getPokemon().length === 0){
-            this.pokemonService.fetchPokemon(this.trainerService.trainer);
+            this.pokemonService.populatePokemon(this.trainerService.trainer);
+            const names: string [] =  this.trainerService.trainerPokemon;
+            for (const name of names) {
+                this.pokemon.push(this.pokemonService.pokemonFromMap(name));
+            }
         }
-        const names: string [] =  this.trainerService.trainerPokemon;
-        for (const name of names) {
-            this.pokemon.push(this.pokemonService.pokemonFromMap(name));
+        else{
+            const names: string [] =  this.trainerService.trainerPokemon;
+            for (const name of names) {
+                this.pokemon.push(this.pokemonService.pokemonFromMap(name));
+            }
         }
     }
 }

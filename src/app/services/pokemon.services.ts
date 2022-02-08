@@ -63,9 +63,7 @@ export class PokemonService{
             for(let i = 0; i < trainer!.pokemon.length; i++){
                 this.collectPokemonWithName(trainer!.pokemon[i]);
             }
-        }, (error: HttpErrorResponse) =>{
-            this.error = error.message;
-        })
+        },)
     }
 
     //A getter that returns all pokemon stored in state.

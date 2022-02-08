@@ -1,4 +1,11 @@
 .pokemon-list {
-    text-align: center;
+    display: grid;
     list-style-type: none;
+    border-color: cadetblue;
+    border-style:double;
+    justify-items: center;
+    text-transform: capitalize;
+    color: cadetblue;
+    font-size: larger;
+    font-weight: bolder;
 }

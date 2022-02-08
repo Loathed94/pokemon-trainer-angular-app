@@ -7,3 +7,12 @@
     width: 30%;
     margin: auto;
 }
+
+#pokemon {
+    color: white;
+}
+
+.form-label{
+    font-size: larger;
+    font-weight: bolder;
+}

@@ -1,5 +1,5 @@
-import { Component, NgModule } from "@angular/core";
-import { Router, RouterModule, Routes } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 import { CataloguePage } from "./catalogue/catalogue.page";
 import { TrainerAuthGuard } from "./guards/trainer-auth.guard";
 import { LoginTrainerPage } from "./login-trainer/login-trainer.page";
@@ -22,6 +22,11 @@ const routes: Routes = [
         redirectTo: '/login/'
     },
     {
+        path: 'login',
+        pathMatch: 'full',
+        redirectTo: '/login/'
+    },
+    {
         path: 'login/:reroute',
         component: LoginTrainerPage,
     },
@@ -34,7 +39,6 @@ const routes: Routes = [
         path: 'trainer',
         component: TrainerPage,
         canActivate: [ TrainerAuthGuard ]
-
     }
 
 ]

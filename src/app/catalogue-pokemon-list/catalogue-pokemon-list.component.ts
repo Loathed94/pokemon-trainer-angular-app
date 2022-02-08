@@ -21,18 +21,14 @@ export class CataloguePokemonListComponent implements OnInit{
     //On initialization this component fetches the pokemon from pokemonService and makes sure that there's a trainer in the trainerService.
     ngOnInit(): void {
         if(this.trainerService.trainer === null){
-            console.log("if");
             this.router.navigateByUrl('/login/catalogue');
         }
         else if(this.pokemonService.getPokemon().length === 0){
-            console.log("Else if");
-            console.log(this.pokemonService.pokeNameMap.entries());
             this.pokemonService.populatePokemon(this.trainerService.trainer);
         }
         else{
-            console.log(this.pokemonService.pokeNameMap.entries());
+            this.pokemonService.populatePokemon(this.trainerService.trainer);
             for(const pokemon of this.trainerService.trainerPokemon){
-                console.log(pokemon);
                 this.pokemonService.collectPokemonWithName(pokemon);
             }
         }

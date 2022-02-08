@@ -29,6 +29,8 @@ export class TrainerPage implements OnInit{
     //Logs out the user, clearing localStorage and redirecting user to Login-page.
     public logOut(){
         localStorage.clear();
+        this.pokemonService.clearPokemon();
+        this.trainerService.setTrainer(null);
         this.router.navigateByUrl('/login/');
     }
 

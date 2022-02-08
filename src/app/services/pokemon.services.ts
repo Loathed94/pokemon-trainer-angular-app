@@ -18,6 +18,11 @@ export class PokemonService{
 
     }
 
+
+
+    public clearPokemon(): void{
+        this.pokemonWithImg = [];
+    }
     //This method populates the list of pokemon in this service/state by using one of two other methods depending on the situation.
     //Both called methods will also iterate over trainer's pokemon and mark those as collected in the list of pokemon stored here.
     public populatePokemon(trainer: Trainer | null): void{
@@ -31,13 +36,11 @@ export class PokemonService{
 
     //The method first checks if there is a list of pokemon in sessionStorage, if so it fetches that information to the state and returns.
     private setPokemonFromStorage(trainer: Trainer | null): void{
-        console.log("Storage");
         const pokeStorage: PokemonWithImage[] = JSON.parse(sessionStorage.getItem(this.POKEMON_KEY) || '');
         this.pokemonWithImg = pokeStorage;
         for(let i = 0; i < this.pokemonWithImg.length; i++){
             this.pokeNameMap.set(this.pokemonWithImg[i].pokemon.name, this.pokemonWithImg[i]);
         }
-        console.log(this.pokeNameMap.entries());
         for(let i = 0; i < trainer!.pokemon.length; i++){
             this.collectPokemonWithName(trainer!.pokemon[i]);
         }
@@ -46,7 +49,6 @@ export class PokemonService{
 
     //This method performs a fetch from API and stores the results in this state and in sessionStorage. 
     private fetchPokemon(trainer: Trainer | null): void{
-        console.log("Fetch");
         this.http.get<PokemonRawData>(this.POKEMON_URL)
         .subscribe((pokemonRaw: PokemonRawData) => {
             const pokemon: Pokemon[] = pokemonRaw.results;
@@ -100,7 +102,6 @@ export class PokemonService{
     //Allows for easier access to specific pokemon. Used when a trainer is fetched that already owns some pokemon.
     public collectPokemonWithName(name: string): void {
         const namedPokemon: PokemonWithImage = this.pokeNameMap.get(name) || {pokemon: {name: '', url: ''}, img: '', id: NaN, collected: false};
-        console.log(namedPokemon);
         namedPokemon.collected = true;
         this.updatePokemonStorage();
     }

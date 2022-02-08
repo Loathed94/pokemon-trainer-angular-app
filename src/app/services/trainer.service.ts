@@ -41,7 +41,7 @@ export class TrainersService{
     }
 
     //A setter for the service's trainer object.
-    public setTrainer(trainer: Trainer): void{
+    public setTrainer(trainer: Trainer | null): void{
         this._trainer = trainer;
     }
 

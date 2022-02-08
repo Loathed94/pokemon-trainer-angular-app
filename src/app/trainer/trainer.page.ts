@@ -55,7 +55,7 @@ export class TrainerPage implements OnInit{
             this.router.navigateByUrl('/login/trainer');
         }
         else if(this.pokemonService.getPokemon().length === 0){
-            this.pokemonService.fetchPokemon(this.trainerService.trainer);
+            this.pokemonService.populatePokemon(this.trainerService.trainer);
             const names: string [] =  this.trainerService.trainerPokemon;
             for (const name of names) {
                 this.pokemon.push(this.pokemonService.pokemonFromMap(name));

@@ -70,7 +70,6 @@ export class TrainersService{
         .pipe(
             switchMap((trainers: Trainer[]) => {
                 if(trainers.length > 0){
-                    //return of(trainers.pop());
                     return of(trainers[0]);
                 }
                 else{
@@ -81,6 +80,7 @@ export class TrainersService{
         .subscribe((trainer: Trainer) => {
             this.setTrainer(trainer);
             localStorage.setItem(TRAINER_KEY, JSON.stringify(trainer));
+            console.log("Navigating to ",routing);
             this.router.navigateByUrl(routing);
         }
         )

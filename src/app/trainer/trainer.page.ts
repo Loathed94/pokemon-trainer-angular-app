@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { PokemonWithImage } from "../models/pokemon.models";
 import { PokemonService } from "../services/pokemon.services";
 import { TrainersService } from "../services/trainer.service";
-
 
 
 @Component({
@@ -20,26 +20,21 @@ export class TrainerPage
 
     }
     constructor(
+        private router: Router,
         private readonly trainerService: TrainersService,
         private readonly pokemonService: PokemonService
     ) { }
 
     logOut(){
-        localStorage.clear()
+        localStorage.clear();
+        this.router.navigateByUrl('/login/');
     }
 
     public handleDeleteClick(pokemon: PokemonWithImage): void {
         pokemon.collected = false;
         const pokeArray: string[] = [...this.trainerService.trainer!.pokemon];
         const index: number = pokeArray.indexOf(pokemon.pokemon.name);
-        const newPokeArray: string[] = [];
         pokeArray.splice(index, 1);
-        /*for (let i = 0; i < pokeArray.length; i++) {
-            const pokemonString: string = pokeArray.pop() || '';
-            if (pokemonString !== pokemon.pokemon.name){
-                newPokeArray.push(pokemonString);
-            }
-        }*/
         this.trainerService.newTrainerPokemon(pokeArray);
         this.trainerService.patchTrainerPokemon();
         this.pokemonService.updatePokemonStorage();
@@ -50,19 +45,21 @@ export class TrainerPage
     }
 
     ngOnInit(): void {
+        console.log("OnInit Trainer");
         if(this.trainerService.trainer === null){
-            this.trainerService.updateTrainerFromStorage();
+            //this.trainerService.updateTrainerFromStorage();
+            //const storedTrainer: Trainer = JSON.parse(localStorage.getItem(TRAINER_KEY) || '');
+            console.log("Rerouting from Trainer to Login");
+            this.router.navigateByUrl('/login/trainer');
         }
-        if(this.pokemonService.getPokemon.length === 0){
+        else if(this.pokemonService.getPokemon.length === 0){
             this.pokemonService.fetchPokemon(this.trainerService.trainer);
+            const names: string [] =  this.trainerService.trainerPokemon;
+            for (const name of names) {
+                this.pokemon.push(this.pokemonService.pokemonFromMap(name));
+            }
+            console.log(this.trainerService.trainer);
+            console.log(this.pokemonService.getPokemon());
         }
-        console.log(this.trainerService.trainer);
-        console.log(this.trainerService.trainerPokemon);
-        const names: string [] =  this.trainerService.trainerPokemon;
-        for (const name of names) {
-            this.pokemon.push(this.pokemonService.pokemonFromMap(name));
-        }
-        console.log(this.trainerService.trainer);
-        console.log(this.pokemonService.getPokemon());
     }
 }

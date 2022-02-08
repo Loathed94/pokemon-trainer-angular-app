@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { PokemonWithImage } from "../models/pokemon.models";
-import { Trainer } from "../models/trainer.models";
 import { PokemonService } from "../services/pokemon.services";
 import { TrainersService } from "../services/trainer.service";
 
@@ -11,7 +11,9 @@ import { TrainersService } from "../services/trainer.service";
 })
 export class CataloguePokemonListComponent implements OnInit{
 
-    constructor(private readonly pokemonService: PokemonService,
+    constructor(
+        private router: Router,
+        private readonly pokemonService: PokemonService,
         private readonly trainerService: TrainersService){
 
     }
@@ -19,9 +21,11 @@ export class CataloguePokemonListComponent implements OnInit{
     //On initialization this component fetches the pokemon from pokemonService and makes sure that there's a trainer in the trainerService.
     ngOnInit(): void {
         if(this.trainerService.trainer === null){
-            this.trainerService.updateTrainerFromStorage();
+            this.router.navigateByUrl('/login/catalogue');
         }
-        this.pokemonService.fetchPokemon(this.trainerService.trainer);
+        else{
+            this.pokemonService.fetchPokemon(this.trainerService.trainer);
+        }
     }
 
     //A getter that returns the list of pokemon contained within the pokemonService.

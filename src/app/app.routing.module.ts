@@ -19,10 +19,10 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/login'
+        redirectTo: '/login/'
     },
     {
-        path: 'login',
+        path: 'login/:reroute',
         component: LoginTrainerPage,
     },
     {

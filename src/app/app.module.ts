@@ -11,7 +11,6 @@ import { LoginTrainerPage } from './login-trainer/login-trainer.page';
 import { AppComponent } from './app.component';
 import { TrainerPage } from './trainer/trainer.page';
 import { TrainerPokemonListComponent } from './trainer-pokemon-list/trainer-pokemon-list.component';
-import { RouterModule } from '@angular/router';
  
 
 @NgModule({
@@ -23,14 +22,12 @@ import { RouterModule } from '@angular/router';
     CataloguePokemonListItemComponent,
     TrainerPage,
     TrainerPokemonListComponent
-
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule
-    //RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

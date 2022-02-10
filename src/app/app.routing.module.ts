@@ -21,7 +21,7 @@ const routes: Routes = [
     },
     {
         path: 'login/:reroute',
-        component: LoginTrainerPage,
+        component: LoginTrainerPage
     },
     {
         path: 'catalogue',

@@ -37,6 +37,8 @@ Option 2: ng serve -o (Opens the browser without needing to click on the link.)
 ## Authors
 Christian Neij 
 Dennis Massoumnataj
+## Deployment
+https://chrennis-pokemon-app.herokuapp.com/
 ## License
 No license.
 ## Acknowledgments
